@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,16 +30,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'ibroker.apps.IbrokerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
+    'ibroker',
 ]
 
-AUTH_USER_MODEL = 'ibroker.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,6 +71,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'market4fun.wsgi.application'
+LOGIN_REDIRECT_URL = 'ibroker:home'
+LOGOUT_REDIRECT_URL = 'ibroker:home'
+
 
 
 # Database

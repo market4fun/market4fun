@@ -1,31 +1,22 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-
+from users.models import CustomUser
+from django import forms
+from django.contrib import admin
 TOTAL_DIGITS = 15
 
 # Create your models here.
 
 
-class CustomUser(AbstractUser):
-
-    def __str__(self):
-        return self.email
-
-
-class Address(models.Model):
-    address_street = models.CharField(max_length=200)
-    address_city = models.CharField(max_length=200)
-    address_state = models.CharField(max_length=200)
-    address_country = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.address_street
-
 class Company(models.Model):
     company_name = models.CharField(max_length=200)
     company_description = models.CharField(max_length=255)
     company_img_url = models.URLField() #TODO trocar para ImageField
-    address = models.ForeignKey(Address,on_delete=models.CASCADE)
+    address = models.CharField(max_length=200)
+    city = models.CharField(max_length=200)
+    state = models.CharField(max_length=200)
+    country = models.CharField(max_length=200)
+
+
 
 class Stock(models.Model):
     stock_code = models.CharField(max_length=50)
