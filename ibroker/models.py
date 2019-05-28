@@ -18,6 +18,9 @@ class Address(models.Model):
     address_state = models.CharField(max_length=200)
     address_country = models.CharField(max_length=200)
 
+    def __str__(self):
+        return self.address_street
+
 class Company(models.Model):
     company_name = models.CharField(max_length=200)
     company_description = models.CharField(max_length=255)

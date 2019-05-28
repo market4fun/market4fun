@@ -76,7 +76,7 @@ class Migration(migrations.Migration):
                 ('company_name', models.CharField(max_length=200)),
                 ('company_description', models.CharField(max_length=255)),
                 ('company_img_url', models.URLField()),
-                ('address', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='iBroker.Address')),
+                ('address', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ibroker.Address')),
             ],
         ),
         migrations.CreateModel(
@@ -85,7 +85,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('stock_code', models.CharField(max_length=50)),
                 ('stock_description', models.CharField(max_length=200)),
-                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='iBroker.Company')),
+                ('company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ibroker.Company')),
             ],
         ),
         migrations.CreateModel(
@@ -94,7 +94,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('price', models.DecimalField(decimal_places=2, max_digits=15)),
                 ('quote_datetime', models.DateTimeField(verbose_name='Data da cotação')),
-                ('stock', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='iBroker.Stock')),
+                ('stock', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ibroker.Stock')),
             ],
         ),
         migrations.CreateModel(

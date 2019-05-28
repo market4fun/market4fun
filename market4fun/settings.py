@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'iBroker.apps.IbrokerConfig',
+    'ibroker.apps.IbrokerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-AUTH_USER_MODEL = 'iBroker.CustomUser'
+AUTH_USER_MODEL = 'ibroker.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'market4fun.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
