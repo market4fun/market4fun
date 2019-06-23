@@ -1,0 +1,9 @@
+{% if company_list %}
+    <ul>
+    {% for company in company_list %}
+        <li><a href="{% url 'ibroker:company_detail' company.id %}">{{ company.company_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No companies are available.</p>
+{% endif %}

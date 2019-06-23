@@ -16,28 +16,36 @@ class Company(models.Model):
     state = models.CharField(max_length=200)
     country = models.CharField(max_length=200)
 
-
+    def __str__(self):
+        return self.company_name
 
 class Stock(models.Model):
     stock_code = models.CharField(max_length=50)
     stock_description = models.CharField(max_length=200)
     company = models.ForeignKey(Company,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.stock_code
+
 class Quote(models.Model):
     stock = models.ForeignKey(Stock,on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=TOTAL_DIGITS,decimal_places=2)
     quote_datetime = models.DateTimeField('Data da cotação')
 
+    def __str__(self):
+        return "{0} - {1}".format(self.stock,self.quote_datetime)
+
 
 class Order(models.Model):
-    #BUY = 'B'
-    #SELL = 'S'
-    #ORDER_TYPES = [(BUY,"Compra"),(SELL,"Venda")]
-    #order_type = models.CharField(max_length=1,choices=ORDER_TYPES,default=BUY)
     order_amount = models.IntegerField()
-    order_price = models.DecimalField(max_digits=TOTAL_DIGITS,decimal_places=2)
+    order_stock_quote = models.ForeignKey(Quote,on_delete=models.DO_NOTHING)
+    #order_price = models.DecimalField(max_digits=TOTAL_DIGITS,decimal_places=2)
     order_datetime = models.DateTimeField()
     order_user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
+
+
+    def __str__(self):
+        return "{0} - {1} - {2}".format(self.order_user.first_name,self.order_stock_quote.stock.stock_code,self.order_datetime)
 
 
 #Todo criar esta view no banco de dados.

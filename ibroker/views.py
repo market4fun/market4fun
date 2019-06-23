@@ -1,15 +1,19 @@
 from django.shortcuts import render
+from django.shortcuts import Http404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-
+from django.template import loader
 from django.views import generic
 from django.views.generic import TemplateView
 from ibroker.models import Company
+from ibroker.models import Quote
+
 
 # Create your views here.
 
 class HomePageView(TemplateView):
     template_name = 'home.html'
+
 
 
 
@@ -20,11 +24,34 @@ def portfolio(request):
     return HttpResponse("{0}, você está logado. Página de portfolio".format(user.first_name))
 
 
-# Executar ordens
+# Aqui mostra as opções para executar. (Ações e seus preços)
+@login_required
+def order_index(request):
+    return HttpResponse("{0}, você comprou )")
+
+
+# Aqui executa. (Após o post)
 @login_required
 def order(request):
-    user = request.user
-    return HttpResponse("{0}, você está na página de execução de ordens (compra e venda)")
+    if request.method!="POST":
+        user = request.user
+        try:
+            last_update_datetime = Quote.objects.order_by('quote_datetime')[0].quote_datetime
+        except:
+            raise Http404("Não existe nenhuma cotação ainda.")
+
+
+        quote_list = Quote.objects.filter(quote_datetime__gte=last_update_datetime)
+        context = {
+            'quote_list': quote_list,
+        }
+        return render(request,'ibroker/order/order.html',context)
+
+    else:
+        user = request.user
+
+        return HttpResponse("{0}, você comprou )")
+
 
 # Visualizar cotações
 def quotes(request):
@@ -37,14 +64,17 @@ def history(request):
 
 
 class CompaniesView(generic.ListView):
-    template_name = 'ibroker/companies.html'
+    template_name = 'ibroker/company/companies.html'
     context_object_name = 'company_list'
 
     def get_queryset(self):
-        return Company.objects
+        return Company.objects.all
 
-def companies(request):
-    return HttpResponse("Página para visualizar as companhias listadas.")
+
+class CompanyDetail(generic.DetailView):
+    model = Company
+    template_name = 'ibroker/company/detail.html'
+
 
 def stocks(request):
     return HttpResponse("Página para visualizar as ações listadas.")

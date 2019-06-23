@@ -1,0 +1,12 @@
+<h1>Ativos</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'ibroker:order' %}" method="post">
+{% csrf_token %}
+{% for quote in quote_list %}
+    {{quote.stock.stock_code}}:
+    <input type="text" name="stock_qtd" id="stock_qtd_{{ forloop.counter }}" value=""><br>
+{% endfor %}
+<input type="submit" value="Executar">
+</form>
