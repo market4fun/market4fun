@@ -7,50 +7,71 @@ from django.views import generic
 from django.views.generic import TemplateView
 from ibroker.models import Company
 from ibroker.models import Quote
-
-
+from .forms import UploadQuotesFile
+from .forms import NameForm
+from django.views import View
 # Create your views here.
-
 class HomePageView(TemplateView):
     template_name = 'home.html'
 
+#region Companhias
+class CompaniesView(generic.ListView):
+    template_name = 'ibroker/company/companies.html'
+    context_object_name = 'company_list'
+
+    def get_queryset(self):
+        return Company.objects.all
+
+
+class CompanyDetail(generic.DetailView):
+    model = Company
+    template_name = 'ibroker/company/detail.html'
+#endregion
 
 
 
-# Visualização da carteira do usuario
-@login_required
-def portfolio(request):
-    user = request.user
-    return HttpResponse("{0}, você está logado. Página de portfolio".format(user.first_name))
+def upload_file(request):
+    if request.method=="POST":
+        form = UploadQuotesFile(request.POST,request.FILES)
+
+        if form.is_valid():
+            handle_upload_file(request.FILES['file'])
+            return HttpResponse('Arquivo enviado com sucesso')
+    else:
+        form = UploadQuotesFile()
+        return render(request,'upload.html',{'form':form})
 
 
-# Aqui mostra as opções para executar. (Ações e seus preços)
-@login_required
-def order_index(request):
-    return HttpResponse("{0}, você comprou )")
-
-
-# Aqui executa. (Após o post)
-@login_required
-def order(request):
-    if request.method!="POST":
+class Order(View):
+    def get(request):
         user = request.user
         try:
             last_update_datetime = Quote.objects.order_by('quote_datetime')[0].quote_datetime
         except:
             raise Http404("Não existe nenhuma cotação ainda.")
 
-
         quote_list = Quote.objects.filter(quote_datetime__gte=last_update_datetime)
         context = {
             'quote_list': quote_list,
         }
-        return render(request,'ibroker/order/order.html',context)
+        return render(request, 'ibroker/order/order.html', context)
 
-    else:
+    def post(request):
         user = request.user
 
         return HttpResponse("{0}, você comprou )")
+
+def handle_upload_file(file):
+    a = "teste"
+
+
+# Visualização da carteira do usuario - possibilidade de vender
+@login_required
+def portfolio(request):
+    user = request.user
+    return HttpResponse("{0}, você está logado. Página de portfolio".format(user.first_name))
+
+
 
 
 # Visualizar cotações
@@ -63,19 +84,7 @@ def history(request):
     return HttpResponse("Página para visualizar histórico de operações.")
 
 
-class CompaniesView(generic.ListView):
-    template_name = 'ibroker/company/companies.html'
-    context_object_name = 'company_list'
-
-    def get_queryset(self):
-        return Company.objects.all
-
-
-class CompanyDetail(generic.DetailView):
-    model = Company
-    template_name = 'ibroker/company/detail.html'
-
-
+@login_required
 def stocks(request):
     return HttpResponse("Página para visualizar as ações listadas.")
 
