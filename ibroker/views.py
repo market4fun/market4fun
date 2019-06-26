@@ -86,7 +86,7 @@ class Order(View):
 
 
                 return HttpResponse(
-                    "Stock: {0}<br>Preço: {1}<br>Total:{2}".format(order.order_amount))
+                    "Stock: {0}<br>Preço: {1}<br>Total:{2}".format(stock.stock_code,quote.price,quote.price*qtd))
             except:
                 raise Http404("Erro ao executar ordem.")
 
