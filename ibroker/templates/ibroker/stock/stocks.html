@@ -1,0 +1,10 @@
+<h1>Stocks</h1>
+{% if stocks %}
+    <ul>
+    {% for stock in stocks %}
+        <li><a href="{% url 'ibroker:stock_detail' stock.id %}">{{ stock.stock_code }} - {{ stock.stock_description }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No stocks are available.</p>
+{% endif %}

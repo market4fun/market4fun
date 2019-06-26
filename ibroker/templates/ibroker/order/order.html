@@ -1,12 +1,21 @@
-<h1>Ativos</h1>
+{% block content %}
+  <h2>Order Form</h2>
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
 
-<form action="{% url 'ibroker:order' %}" method="post">
-{% csrf_token %}
-{% for quote in quote_list %}
-    {{quote.stock.stock_code}}:
-    <input type="text" name="stock_qtd" id="stock_qtd_{{ forloop.counter }}" value=""><br>
-{% endfor %}
-<input type="submit" value="Executar">
-</form>
+
+  <form method="post">
+    {% csrf_token %}
+      <p>Cash available: {{user.get_amount_cash}} </p>
+      {{ form.as_p }}
+      <p><b>Total:</b> Não implementado ainda.</p>
+
+    <button type="submit">Executar</button>
+  </form>
+{% endblock %}

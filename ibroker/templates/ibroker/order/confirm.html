@@ -1,0 +1,12 @@
+<h1>Confirm Order</h1>
+<br>
+<form method="post">
+    {% csrf_token %}
+    <p>Your cash amount: {{form.cash}}</p>
+    <p>Type: {{form.type}}</p>
+    <p>Stock: {{form.stock.stock_description}}</p>
+    <p>Preço: R$ {{form.price}}</p>
+    <p>Quantidade: {{form.qtd}}</p>
+    <p>Total: R$ {{form.total}}</p>
+    <button type="Change" onclick="history.back()"></button><button type="submit">Confirm</button>
+</form>

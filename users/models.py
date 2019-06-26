@@ -9,3 +9,7 @@ class CustomUser(AbstractUser):
 
     cash = models.DecimalField(max_digits=15,decimal_places=2,default=100000)
     objects = CustomUserManager()
+
+
+    def get_amount_cash(self):
+        return self.cash
