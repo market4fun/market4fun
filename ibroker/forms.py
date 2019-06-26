@@ -38,12 +38,14 @@ class OrderForm(forms.Form):
             )
 
         if quote:
-            # if quote.price*qtd>self.user.get_amount_cash:
             if quote.price*qtd>self.user.get_amount_cash():
                 raise forms.ValidationError(
                         "You don't have enough money to buy {0} of {1}.".format(qtd,stock.stock_code)
                     )
 
         return cleaned_data
+
+
+
 
 

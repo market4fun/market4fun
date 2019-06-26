@@ -9,6 +9,9 @@ from ibroker.models import Company, Stock
 from ibroker.models import Quote
 from .forms import UploadQuotesFile,OrderForm
 from django.views import View
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+import datetime
 
 # Create your views here.
 class HomePageView(TemplateView):
@@ -41,7 +44,7 @@ def upload_file(request):
         form = UploadQuotesFile()
         return render(request,'upload.html',{'form':form})
 
-
+@method_decorator(login_required, name='dispatch')
 class Order(View):
     def get(self,request):
         user = request.user
@@ -73,23 +76,21 @@ class Order(View):
                 quote = Quote.objects.filter(stock = stock.id).order_by('-quote_datetime')[0]
 
 
+#                 order = Order(order_amount=qtd,order_stock_quote=quote,order_datetime=datetime.datetime.now(),order_user=user)
+# #                order.save()
+#
+#
+#                 #user.cash=user.cash-total
+#                 # user.save()
 
 
-                contextObject = {'qtd':qtd,
-                                 'stock':stock,
-                                 'quote':quote,
-                                 'type':'BUY',
-                                 'cash': user.get_amount_cash()
-                }
 
                 return HttpResponse(
-                    "Stock: {0}<br>Preço: {1}<br>Total:{2}".format(stock.stock_code, quote.price, quote.price * qtd))
-
+                    "Stock: {0}<br>Preço: {1}<br>Total:{2}".format(order.order_amount))
             except:
                 raise Http404("Erro ao executar ordem.")
 
         return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
-
 
 
 
