@@ -6,7 +6,7 @@ from django.template import loader
 from django.views import generic
 from django.views.generic import TemplateView,ListView
 from ibroker.models import Company, Stock
-from ibroker.models import Quote
+from ibroker.models import Quote,Order
 from .forms import UploadQuotesFile,OrderForm
 from django.views import View
 from django.contrib.auth.decorators import login_required
@@ -45,27 +45,18 @@ def upload_file(request):
         return render(request,'upload.html',{'form':form})
 
 @method_decorator(login_required, name='dispatch')
-class Order(View):
+class OrderView(View):
     def get(self,request):
         user = request.user
-        # try:
-        #     last_update_datetime = Quote.objects.order_by('quote_datetime')[0].quote_datetime
-        # except:
-        #     raise Http404("Não existe nenhuma cotação ainda.")
-        #
-        # quote_list = Quote.objects.filter(quote_datetime__gte=last_update_datetime)
-        # context = {
-        #     'quote_list': quote_list,
-        # }
-        #
+
         form = OrderForm(user=user)
+
         return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
 
     def post(self,request):
         user = request.user
 
         #Aqui a mágica acontece
-
         form = OrderForm(request.POST,user=user)
 
         if(form.is_valid()):
@@ -76,17 +67,17 @@ class Order(View):
                 quote = Quote.objects.filter(stock = stock.id).order_by('-quote_datetime')[0]
 
 
-#                 order = Order(order_amount=qtd,order_stock_quote=quote,order_datetime=datetime.datetime.now(),order_user=user)
-# #                order.save()
-#
-#
-#                 #user.cash=user.cash-total
-#                 # user.save()
+                now = datetime.datetime.now()
 
+                newOrder = Order(order_amount=qtd,order_stock_quote=quote,order_datetime=now,order_user=user)
+                newOrder.save()
 
+                total = quote.price*qtd
+                user.cash=user.cash-total
+                user.save()
 
                 return HttpResponse(
-                    "Stock: {0}<br>Preço: {1}<br>Total:{2}".format(stock.stock_code,quote.price,quote.price*qtd))
+                    "Stock: {0}<br>Preço: {1}<br>Total:{2}".format(newOrder.order_datetime,quote.price,quote.price*qtd))
             except:
                 raise Http404("Erro ao executar ordem.")
 
