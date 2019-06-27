@@ -330,9 +330,9 @@ def portfolio(request):
             stocksDic.get(stock.id).invested_value += order.order_amount * quote.price
             stocksDic.get(stock.id).current_value = stocksDic.get(stock.id).amount * stocksDic.get(stock.id).current_price
 
+    cash = UserHistory().get_amount_cash(user)
 
-
-    return render(request,'ibroker/portfolio.html',{'dic':stocksDic})
+    return render(request,'ibroker/portfolio.html',{'dic':stocksDic,'cash':cash})
 
 
 
