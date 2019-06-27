@@ -189,11 +189,12 @@ class SellView(View):
 def quotes(request):
     return HttpResponse("Página para visualizar cotações")
 
-# visualizar histórico de operações
-@login_required
-def history(request):
-    return HttpResponse("Página para visualizar histórico de operações.")
 
+class HistoryView(View):
+
+
+    def get(self,request):
+        return HttpResponse("Página para visualizar histórico de operações.")
 
 
 class StockListView(ListView):
