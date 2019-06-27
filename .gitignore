@@ -4,3 +4,5 @@
 ibroker/migrations/
 
 users/migrations/
+
+db\.sqlite3
