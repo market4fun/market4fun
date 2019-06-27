@@ -437,6 +437,7 @@ class StockListView(ListView):
     context_object_name = "stocks"
     template_name = 'ibroker/stock/stocks.html'
 
+
 class StockDetailView(generic.DetailView):
     model = Stock
     template_name = 'ibroker/stock/detail.html'
