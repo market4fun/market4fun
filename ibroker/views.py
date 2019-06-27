@@ -54,9 +54,9 @@ class HomePageView(TemplateView):
         dates = Quote.objects.values_list('quote_datetime').distinct()
 
 
+        dates = [d[0].date().__str__() for d in dates]
         perfs = [float(UserHistory().get_user_total_assets_value_date(user,d)) for d in dates]
 
-        dates = [d[0].date().__str__() for d in dates]
 
         ctx = {
             'dates': json.dumps(dates),
