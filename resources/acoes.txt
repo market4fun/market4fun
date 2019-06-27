@@ -1,0 +1,67 @@
+Stock code	stock description	company name	company description	company img	address	city	state 	country
+BTOW3	B2w - Companhia Digital ON	B2W - COMPANHIA DIGITAL		https://br.advfn.com/common/images/companies/BOV_BTOW3.png				
+MGLU3	Magaz Luiza ON	MAGAZINE LUIZA S.A		https://br.advfn.com/common/images/companies/BOV_MGLU3.png				
+FLRY3	Fleury ON	Fleury		https://br.advfn.com/common/images/companies/BOV_FLRY3.png				
+VVAR3		VIA VAREJO S/A		https://br.advfn.com/common/images/companies/BOV_VVAR3.png				
+IRBR3	IRB Brasil ON	 IRB - Brasil Resseguros S/A		https://br.advfn.com/common/images/companies/BOV_IRBR3.png				
+CVCB3	Cvc Brasil ON	CVC BRASIL OPERADORA E AGÊNCIA DE VIAGENS S/A		https://br.advfn.com/common/images/companies/BOV_CVCB3.png				
+MRVE3	MRVE3	MRVE3		https://br.advfn.com/common/images/companies/BOV_MRVE3.png				
+BBDC3	BBDC3	BBDC3		https://br.advfn.com/common/images/companies/BOV_BBDC3.png				
+PCAR4	PCAR4	PCAR4		https://br.advfn.com/common/images/companies/BOV_PCAR4.png				
+LREN3	LREN3	LREN3		https://br.advfn.com/common/images/companies/BOV_LREN3.png				
+SANB11	SANB11	SANB11		https://br.advfn.com/common/images/companies/BOV_SANB11.png				
+RADL3	RADL3	RADL3		https://br.advfn.com/common/images/companies/BOV_RADL3.png				
+BBDC4	BBDC4	BBDC4		https://br.advfn.com/common/images/companies/BOV_BBDC4.png				
+B3SA3	B3SA3	B3SA3		https://br.advfn.com/common/images/companies/BOV_B3SA3.png				
+ITUB4	ITUB4	ITUB4		https://br.advfn.com/common/images/companies/BOV_ITUB4.png				
+ITSA4	ITSA4	ITSA4		https://br.advfn.com/common/images/companies/BOV_ITSA4.png				
+AZUL4	AZUL4	AZUL4		https://br.advfn.com/common/images/companies/BOV_AZUL4.png				
+BBAS3	BBAS3	BBAS3		https://br.advfn.com/common/images/companies/BOV_BBAS3.png				
+LAME4	LAME4	LAME4		https://br.advfn.com/common/images/companies/BOV_LAME4.png				
+WEGE3	WEGE3	WEGE3		https://br.advfn.com/common/images/companies/BOV_WEGE3.png				
+BRML3	BRML3	BRML3		https://br.advfn.com/common/images/companies/BOV_BRML3.png				
+TAEE11	TAEE11	TAEE11		https://br.advfn.com/common/images/companies/BOV_TAEE11.png				
+IGTA3	IGTA3	IGTA3		https://br.advfn.com/common/images/companies/BOV_IGTA3.png				
+ENBR3	ENBR3	ENBR3		https://br.advfn.com/common/images/companies/BOV_ENBR3.png				
+SBSP3	SBSP3	SBSP3		https://br.advfn.com/common/images/companies/BOV_SBSP3.png				
+CSAN3	CSAN3	CSAN3		https://br.advfn.com/common/images/companies/BOV_CSAN3.png				
+SMLS3	SMLS3	SMLS3		https://br.advfn.com/common/images/companies/BOV_SMLS3.png				
+EGIE3	EGIE3	EGIE3		https://br.advfn.com/common/images/companies/BOV_EGIE3.png				
+GOLL4	GOLL4	GOLL4		https://br.advfn.com/common/images/companies/BOV_GOLL4.png				
+RAIL3	RAIL3	RAIL3		https://br.advfn.com/common/images/companies/BOV_RAIL3.png				
+BRKM5	BRKM5	BRKM5		https://br.advfn.com/common/images/companies/BOV_BRKM5.png				
+ABEV3	ABEV3	ABEV3		https://br.advfn.com/common/images/companies/BOV_ABEV3.png				
+MULT3	MULT3	MULT3		https://br.advfn.com/common/images/companies/BOV_MULT3.png				
+BRDT3	BRDT3	BRDT3		https://br.advfn.com/common/images/companies/BOV_BRDT3.png				
+HYPE3	HYPE3	HYPE3		https://br.advfn.com/common/images/companies/BOV_HYPE3.png				
+GOAU4	GOAU4	GOAU4		https://br.advfn.com/common/images/companies/BOV_GOAU4.png				
+VALE3	VALE3	VALE3		https://br.advfn.com/common/images/companies/BOV_VALE3.png				
+PETR4	PETR4	PETR4		https://br.advfn.com/common/images/companies/BOV_PETR4.png				
+BBSE3	BBSE3	BBSE3		https://br.advfn.com/common/images/companies/BOV_BBSE3.png				
+ELET3	ELET3	ELET3		https://br.advfn.com/common/images/companies/BOV_ELET3.png				
+KLBN11	KLBN11	KLBN11		https://br.advfn.com/common/images/companies/BOV_KLBN11.png				
+GGBR4	GGBR4	GGBR4		https://br.advfn.com/common/images/companies/BOV_GGBR4.png				
+BRAP4	BRAP4	BRAP4		https://br.advfn.com/common/images/companies/BOV_BRAP4.png				
+VIVT4	VIVT4	VIVT4		https://br.advfn.com/common/images/companies/BOV_VIVT4.png				
+NATU3	NATU3	NATU3		https://br.advfn.com/common/images/companies/BOV_NATU3.png				
+RENT3	RENT3	RENT3		https://br.advfn.com/common/images/companies/BOV_RENT3.png				
+CCRO3	CCRO3	CCRO3		https://br.advfn.com/common/images/companies/BOV_CCRO3.png				
+CMIG4	CMIG4	CMIG4		https://br.advfn.com/common/images/companies/BOV_CMIG4.png				
+USIM5	USIM5	USIM5		https://br.advfn.com/common/images/companies/BOV_USIM5.png				
+BRFS3	BRFS3	BRFS3		https://br.advfn.com/common/images/companies/BOV_BRFS3.png				
+EQTL3	EQTL3	EQTL3		https://br.advfn.com/common/images/companies/BOV_EQTL3.png				
+PETR3	PETR3	PETR3		https://br.advfn.com/common/images/companies/BOV_PETR3.png				
+ELET6	ELET6	ELET6		https://br.advfn.com/common/images/companies/BOV_ELET6.png				
+JBSS3	JBSS3	JBSS3		https://br.advfn.com/common/images/companies/BOV_JBSS3.png				
+SUZB3	SUZB3	SUZB3		https://br.advfn.com/common/images/companies/BOV_SUZB3.png				
+EMBR3	EMBR3	EMBR3		https://br.advfn.com/common/images/companies/BOV_EMBR3.png				
+CYRE3	CYRE3	CYRE3		https://br.advfn.com/common/images/companies/BOV_CYRE3.png				
+CIEL3	CIEL3	CIEL3		https://br.advfn.com/common/images/companies/BOV_CIEL3.png				
+ESTC3	ESTC3	ESTC3		https://br.advfn.com/common/images/companies/BOV_ESTC3.png				
+TIMP3	TIMP3	TIMP3		https://br.advfn.com/common/images/companies/BOV_TIMP3.png				
+QUAL3	QUAL3	QUAL3		https://br.advfn.com/common/images/companies/BOV_QUAL3.png				
+UGPA3	UGPA3	UGPA3		https://br.advfn.com/common/images/companies/BOV_UGPA3.png				
+KROT3	KROT3	KROT3		https://br.advfn.com/common/images/companies/BOV_KROT3.png				
+MRFG3	MRFG3	MRFG3		https://br.advfn.com/common/images/companies/BOV_MRFG3.png				
+ECOR3	ECOR3	ECOR3		https://br.advfn.com/common/images/companies/BOV_ECOR3.png				
+CSNA3	CSNA3	CSNA3		https://br.advfn.com/common/images/companies/BOV_CSNA3.png				
