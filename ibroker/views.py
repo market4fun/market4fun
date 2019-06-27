@@ -17,7 +17,7 @@ import datetime
 import json
 # Create your views here.
 class HomePageView(TemplateView):
-    template_name = 'home.html'
+    template_name = 'ibroker/home.html'
 
 #region Companhias
 class CompaniesView(generic.ListView):
