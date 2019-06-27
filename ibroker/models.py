@@ -44,3 +44,19 @@ class Order(models.Model):
     def __str__(self):
         return "{0} - {1} - {2}".format(self.order_user.first_name,self.order_stock_quote.stock.stock_code,self.order_datetime)
 
+
+class PorfolioItem():
+    def __init__(self,stock_code,amount,invested_value):
+        self.stock_code = stock_code
+        self.amount = amount
+        self.invested_value = invested_value
+
+    def current_value(self):
+        stock = object.get(stock_code=self.stock_code)
+        quote = Quote.objects.filter(stock=stock.id).order_by('-quote_datetime')[0]
+
+        current_price =quote.price
+        return current_price*self.amount
+
+
+
