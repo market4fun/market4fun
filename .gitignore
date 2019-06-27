@@ -1,2 +1,6 @@
 
 *.pyc
+
+ibroker/migrations/
+
+users/migrations/
