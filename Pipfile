@@ -16,7 +16,7 @@ psycopg2 = "*"
 django-heroku = "*"
 gunicorn = "*"
 whitenoise = "*"
-#"dj-database-url" = "*"
+"dj-database-url" = "*"
 
 
 [dev-packages]
