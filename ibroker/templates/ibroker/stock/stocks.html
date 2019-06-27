@@ -1,3 +1,47 @@
+{% extends "ibroker/base.html" %}
+
+{% block content %}
+
+{% if stokcs %}
+<h1 class="h3 mb-2 text-gray-800">Stocks</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Empresas Bovespa</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Stock</th>
+                        {% comment %}<th>Preço</th>{% endcomment %}
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Stock</th>
+                        {% comment %}<th>Preço</th>{% endcomment %}
+                    </tr>
+                </tfoot>
+                <tbody>
+                    {% for stock in stocks %}
+                    <tr>
+                        <td><a href="{% url 'ibroker:stock_detail' stock.id %}">{{ stock.stock_code }} - {{ stock.stock_description }}</a></td>
+                        {% comment %}<td><p>{{stock.get_price_date(now)}}</p></td>{% endcomment %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<p>No companies are available.</p>
+{% endif %}
+
+{% endblock %}
 <h1>Stocks</h1>
 {% if stocks %}
     <ul>
