@@ -51,7 +51,7 @@ class HomePageView(TemplateView):
         # for stock in stocksDic:
         #     total += stock.invested_value
 
-        dates = Quote.objects.values_list('quote_datetime').distinct()
+        dates = Quote.objects.values_list('quote_datetime').distinct().order_by('quote_datetime')
 
 
         dates = [d[0].date().__str__() for d in dates]
