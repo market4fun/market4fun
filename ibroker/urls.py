@@ -14,5 +14,7 @@ urlpatterns = [
     path('order/', views.OrderView.as_view(), name='order'),
     path('sell/', views.SellView.as_view(), name='sell'),
     path('history/', views.HistoryView.as_view(), name='history'),
+    path('upload_quotes/', views.UploadQuoteView.as_view(), name='upload_quotes'),
+    path('upload_stocks/', views.UploadStockCompanyView.as_view(), name='upload_stocks'),
 
 ]

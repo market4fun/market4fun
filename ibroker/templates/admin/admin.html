@@ -1,0 +1,25 @@
+{% block content %}
+  <h2>Upload Form</h2>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+
+  <form enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+      {{ form.as_p }}
+    <button type="submit">Upload</button>
+  </form>
+{% endblock %}

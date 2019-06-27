@@ -12,7 +12,7 @@
 
   <form method="post">
     {% csrf_token %}
-      <p>Cash available: {{user.get_amount_cash}} </p>
+      <p>Cash available: {{cash}} </p>
       {{ form.as_p }}
       <p><b>Total:</b> Não implementado ainda.</p>
 
