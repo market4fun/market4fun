@@ -177,7 +177,6 @@ class SellView(View):
                 user.cash=user.cash+total
                 user.save()
 
-
                 messages.success(request,"Ordem executada com sucesso")
 
                 return HttpResponseRedirect(reverse("ibroker:portfolio"))
