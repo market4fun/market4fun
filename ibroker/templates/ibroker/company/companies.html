@@ -27,7 +27,7 @@
                   <tbody>
     {% for company in company_list %}
     <tr>
-        <td>Imagem: <img class="img-responsive img-responsive-2" src="{{company.company_img_url}}" alt="{{company.company_name}}" style="height:30px;"> </td>
+        <td> <img class="img-responsive img-responsive-2" src="{{company.company_img_url}}" alt="{{company.company_name}}" style="height:30px;"> </td>
         <td><a href="{% url 'ibroker:company_detail' company.id %}">{{ company.company_name }}</a></td>
     </tr>
     {% endfor %}
