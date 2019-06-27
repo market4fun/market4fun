@@ -51,12 +51,14 @@ class PorfolioItem():
         self.amount = amount
         self.invested_value = invested_value
 
-    def current_value(self):
+    def current_price(self):
         stock = object.get(stock_code=self.stock_code)
         quote = Quote.objects.filter(stock=stock.id).order_by('-quote_datetime')[0]
 
-        current_price =quote.price
-        return current_price*self.amount
+        return quote.price
+
+    def current_value(self):
+        return self.current_price*self.amount
 
 
 
