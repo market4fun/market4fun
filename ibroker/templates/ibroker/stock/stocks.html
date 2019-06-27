@@ -28,7 +28,7 @@
                     {% for stock in stocks %}
                     <tr>
                         <td><a href="{% url 'ibroker:stock_detail' stock.id %}">{{ stock.stock_code }} - {{ stock.stock_description }}</a></td>
-                        <td><p>{{stock.get_price_now}}</p></td>
+                        <td><p>R$ {{stock.get_price_now}}</p></td>
                     </tr>
                     {% endfor %}
                 </tbody>
