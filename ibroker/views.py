@@ -171,19 +171,23 @@ class UploadQuoteView(View):
             cols = line.split("\t")
 
             stock_code = cols[0]
-            stock = stocks.get(stock_code=stock_code)
-            quote_datetime = date
-
             try:
-                price = float(cols[2].replace(",","."))
+                stock = stocks.get(stock_code=stock_code)
+                quote_datetime = date
+
+                try:
+                    price = float(cols[2].replace(",","."))
+                except:
+                    price=0
+
+
+
+
+                quote = Quote(stock=stock,price=price,quote_datetime=quote_datetime)
+                quote.save()
+
             except:
-                price=0
-
-
-
-
-            quote = Quote(stock=stock,price=price,quote_datetime=quote_datetime)
-            quote.save()
+                continue
 
         return list
 
@@ -244,7 +248,7 @@ class OrderView(View):
             except:
                 raise Http404("Erro ao executar ordem.")
 
-            cash = UserHistory().get_amount_cash(user)
+        cash = UserHistory().get_amount_cash(user)
 
         return render(request, 'ibroker/order/order.html', {'form':form,'cash':cash})
 
