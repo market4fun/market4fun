@@ -51,7 +51,21 @@ class HomePageView(TemplateView):
         # for stock in stocksDic:
         #     total += stock.invested_value
 
-       # Add in the publisher
+        dates = Quote.objects.values_list('quote_datetime').distinct()
+
+
+        dates = [d[0].date().__str__() for d in dates]
+        perfs = [float(UserHistory().get_user_total_assets_value_date(user,d)) for d in dates]
+
+
+        ctx = {
+            'dates': json.dumps(dates),
+            'perfs': json.dumps(perfs),
+        }
+
+
+        context['dates'] = json.dumps(dates)
+        context['ctx'] = ctx
         context['user'] = self.request.user
         context['cash'] = UserHistory().get_amount_cash(user)
         context['total'] = UserHistory().get_user_total_assets_value_date(user,datetime.datetime.now())
