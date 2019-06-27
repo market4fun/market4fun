@@ -7,14 +7,14 @@ from django.contrib import messages
 from django.urls import reverse
 from django.views import generic
 from django.views.generic import TemplateView,ListView
-from ibroker.models import Company, Stock
+from ibroker.models import Company, Stock, UserHistory
 from ibroker.models import Quote,Order, PorfolioItem
 from .forms import UploadQuotesFile,OrderForm,SellForm
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import datetime
-
+import json
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = 'home.html'
@@ -199,15 +199,22 @@ class HistoryView(View):
 
 
 
-        dates = Quote.objects.distinct('quote_datetime')
+        dates = Quote.objects.values_list('quote_datetime').distinct()
+
+
+        dates = [d[0].date().__str__() for d in dates]
+        perfs = [float(UserHistory().get_user_total_assets_value_date(user,d)) for d in dates]
+
+
+        ctx = {
+            'dates': json.dumps(dates),
+            'perfs': json.dumps(perfs),
+        }
 
 
 
 
-
-
-
-        return HttpResponse("Página para visualizar histórico de operações.")
+        return render(request,'ibroker/history/history.html',{'ctx':ctx})
 
 
 class StockListView(ListView):
