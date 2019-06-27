@@ -64,7 +64,6 @@ class HomePageView(TemplateView):
         }
 
 
-        context['dates'] = json.dumps(dates)
         context['ctx'] = ctx
         context['user'] = self.request.user
         context['cash'] = UserHistory().get_amount_cash(user)
