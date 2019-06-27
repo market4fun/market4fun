@@ -1,17 +1,20 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.shortcuts import Http404
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.template import loader
+from django.contrib import messages
+from django.urls import reverse
 from django.views import generic
 from django.views.generic import TemplateView,ListView
 from ibroker.models import Company, Stock
-from ibroker.models import Quote,Order
+from ibroker.models import Quote,Order, PorfolioItem
 from .forms import UploadQuotesFile,OrderForm
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import datetime
+from django.db.models import Sum,Count,F
 
 # Create your views here.
 class HomePageView(TemplateView):
@@ -38,7 +41,7 @@ def upload_file(request):
         form = UploadQuotesFile(request.POST,request.FILES)
 
         if form.is_valid():
-            handle_upload_file(request.FILES['file'])
+            #handle_upload_file(request.FILES['file'])
             return HttpResponse('Arquivo enviado com sucesso')
     else:
         form = UploadQuotesFile()
@@ -76,8 +79,10 @@ class OrderView(View):
                 user.cash=user.cash-total
                 user.save()
 
-                return HttpResponse(
-                    "Stock: {0}<br>Preço: {1}<br>Total:{2}".format(newOrder.order_datetime,quote.price,quote.price*qtd))
+
+                messages.success(request,"Ordem executada com sucesso")
+
+                return HttpResponseRedirect(reverse("ibroker:portfolio"))
             except:
                 raise Http404("Erro ao executar ordem.")
 
@@ -85,15 +90,39 @@ class OrderView(View):
 
 
 
-def handle_upload_file(file):
-    a = "teste"
-
-
 # Visualização da carteira do usuario - possibilidade de vender
 @login_required
 def portfolio(request):
     user = request.user
-    return HttpResponse("{0}, você está logado. Página de portfolio".format(user.first_name))
+    ctx = {}
+
+    #
+    # ctx = Order.objects.raw(''' SELECT t3.stock_code,
+    # sum(t1.order_amount) as amount,  sum(t1.order_amount*t2.price) as spent
+    # FROM ibroker_order as t1
+    # JOIN ibroker_quote as t2
+    # ON t1.order_stock_quote_id=t2.id
+    # JOIN ibroker_stock as t3 ON t2.stock_id=t3.id group by t3.id ''')
+
+    ordersFromUser = Order.objects.filter(order_user = user)
+
+
+    stocksDic = {}
+
+    for order in ordersFromUser:
+        quote = order.order_stock_quote
+        stock = quote.stock
+
+        if not stock in stocksDic:
+            invested_value= order.order_amount*quote.price
+            item = PorfolioItem(stock.stock_code,order.order_amount,invested_value)
+            stocksDic[stock] = item
+        else:
+            stocksDic[stock].amount += order.order_amount
+            stocksDic[stock].invested_value += order.order_amount
+            stocksDic[stock].amount += order.order_amount
+
+    return render(request,'ibroker/portfolio.html',{'ctx':ordersFromUser})
 
 
 
