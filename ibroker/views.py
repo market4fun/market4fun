@@ -18,6 +18,14 @@ import json
 # Create your views here.
 class HomePageView(TemplateView):
     template_name = 'ibroker/home.html'
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in the publisher
+        context['user'] = self.request.user
+        user = self.request.user
+        context['cash'] = UserHistory().get_amount_cash(user)
+        return context
 
 #region Companhias
 class CompaniesView(generic.ListView):
