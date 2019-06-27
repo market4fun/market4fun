@@ -44,7 +44,7 @@
                                         </div>
 
                                         <form class="user" method="post">
-                                          {% csrf_token %}
+                                            {% csrf_token %}
                                             <div class="form-group">
                                                 {{ form.username.errors }}
                                                 <label for="{{ form.username.id_for_label }}">Nome de Usuário:</label>
@@ -55,35 +55,39 @@
                                                 <label for="{{ form.password.id_for_label }}">Senha:</label>
                                                 <input id="id_password" name="password" type="password" class="form-control" placeholder="Password" required>
                                             </div>
-                                    <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+                                            <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
                                         </form>
+                                        <hr>
+                                        <div class="text-center">
+                                            <a class="small" href="{% url 'signup' %}">Criar Conta!</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>
 
-        </div>
 
+            <!-- Bootstrap core JavaScript-->
+            <script src={% static 'vendor/jquery/jquery.min.js' %}></script>
+            <script src={% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}></script>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src={% static 'vendor/jquery/jquery.min.js' %}></script>
-        <script src={% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}></script>
+            <!-- Core plugin JavaScript-->
+            <script src={% static 'vendor/jquery-easing/jquery.easing.min.js' %}></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src={% static 'vendor/jquery-easing/jquery.easing.min.js' %}></script>
+            <!-- Custom scripts for all pages-->
+            <script src={% static 'js/sb-admin-2.min.js' %}></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src={% static 'js/sb-admin-2.min.js' %}></script>
+            <!-- Page level plugins -->
+            <script src={% static 'vendor/chart.js/Chart.min.js' %}></script>
 
-        <!-- Page level plugins -->
-        <script src={% static 'vendor/chart.js/Chart.min.js' %}></script>
-
-        <!-- Page level custom scripts -->
-        <script src={% static 'js/demo/chart-area-demo.js' %}></script>
-        <script src={% static 'js/demo/chart-pie-demo.js' %}></script>
+            <!-- Page level custom scripts -->
+            <script src={% static 'js/demo/chart-area-demo.js' %}></script>
+            <script src={% static 'js/demo/chart-pie-demo.js' %}></script>
 
 
     </body>
