@@ -94,6 +94,7 @@ LOGOUT_REDIRECT_URL = 'ibroker:home'
 # }
 DATABASES = {}
 
+DATABASES['default'].update(dj_database_url.config(conn_max_age=600))
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -113,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-DATABASES['default'].update(dj_database_url.config(conn_max_age=500, ssl_require=True))
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
@@ -148,3 +148,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+# This is new
+del DATABASES['default']['OPTIONS']['sslmode']
