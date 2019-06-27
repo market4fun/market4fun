@@ -15,20 +15,20 @@
                 <thead>
                     <tr>
                         <th>Stock</th>
-                        {% comment %}<th>Preço</th>{% endcomment %}
+                        <th>Preço</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th>Stock</th>
-                        {% comment %}<th>Preço</th>{% endcomment %}
+                        <th>Preço</th>
                     </tr>
                 </tfoot>
                 <tbody>
                     {% for stock in stocks %}
                     <tr>
                         <td><a href="{% url 'ibroker:stock_detail' stock.id %}">{{ stock.stock_code }} - {{ stock.stock_description }}</a></td>
-                        {% comment %}<td><p>{{stock.get_price_date(now)}}</p></td>{% endcomment %}
+                        <td><p>{{stock.get_price_now}}</p></td>
                     </tr>
                     {% endfor %}
                 </tbody>

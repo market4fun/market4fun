@@ -3,6 +3,7 @@ from django import forms
 from django.contrib import admin
 from users.models import CustomUser
 from django.db.models import Sum,F
+import datetime
 TOTAL_DIGITS = 15
 
 # Create your models here.
@@ -30,6 +31,10 @@ class Stock(models.Model):
 
     def get_price_date(self,datetime):
         price = Quote.objects.filter(stock=self).filter(quote_datetime__lte=datetime).order_by('-quote_datetime')[0].price
+        return price
+    @property
+    def get_price_now(self):
+        price = Quote.objects.filter(stock=self).filter(quote_datetime__lte=datetime.datetime.now()).order_by('-quote_datetime')[0].price
         return price
 
 class Quote(models.Model):
