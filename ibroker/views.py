@@ -53,6 +53,11 @@ class OrderView(View):
 
         form = OrderForm(user=user)
 
+        stocks = Stock.objects.all()
+        choices = [(stock.id, stock.stock_code) for stock in stocks]
+
+        form.fields['stock'].choices = choices
+
         return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
 
     def post(self,request):
@@ -139,6 +144,13 @@ class SellView(View):
         user = request.user
 
         form = SellForm(user=user)
+
+
+        stocks = Stock.objects.all()
+        choices = [(stock.id, stock.stock_code) for stock in stocks]
+
+        form.fields['stock'].choices = choices
+
 
         return render(request, 'ibroker/order/sell.html', {'form':form,'user':user})
 
