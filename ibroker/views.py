@@ -113,16 +113,74 @@ def portfolio(request):
         quote = order.order_stock_quote
         stock = quote.stock
 
-        if not stock in stocksDic:
+        if not stock.id in stocksDic:
             invested_value= order.order_amount*quote.price
-            item = PorfolioItem(stock.stock_code,order.order_amount,invested_value)
-            stocksDic[stock] = item
-        else:
-            stocksDic[stock].amount += order.order_amount
-            stocksDic[stock].invested_value += order.order_amount
-            stocksDic[stock].amount += order.order_amount
 
-    return render(request,'ibroker/portfolio.html',{'ctx':ordersFromUser})
+            current_price = Quote.objects.filter(stock=stock.id).order_by('-quote_datetime')[0].price
+
+            item = PorfolioItem(stock.stock_code,order.order_amount,invested_value,current_price)
+
+            stocksDic[stock.id] = item
+
+        else:
+            stocksDic.get(stock.id).amount += order.order_amount
+            stocksDic.get(stock.id).invested_value += order.order_amount * quote.price
+            stocksDic.get(stock.id).current_value = stocksDic.get(stock.id).amount * stocksDic.get(stock.id).current_price
+
+
+
+    return render(request,'ibroker/portfolio.html',{'dic':stocksDic})
+
+
+
+@method_decorator(login_required, name='dispatch')
+class SellView(View):
+    def get(self,request):
+        user = request.user
+
+        form = OrderForm(user=user)
+
+        return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
+
+    def post(self,request):
+        user = request.user
+
+        #Aqui a mágica acontece
+        form = OrderForm(request.POST,user=user)
+
+        if(form.is_valid()):
+            try:
+                qtd = form.cleaned_data['qtd'];
+                stockId = form.cleaned_data['stock']
+                stock = Stock.objects.get(pk=stockId)
+                quote = Quote.objects.filter(stock = stock.id).order_by('-quote_datetime')[0]
+
+
+                now = datetime.datetime.now()
+
+                newOrder = Order(order_amount=qtd,order_stock_quote=quote,order_datetime=now,order_user=user)
+                newOrder.save()
+
+                total = quote.price*qtd
+                user.cash=user.cash-total
+                user.save()
+
+
+                messages.success(request,"Ordem executada com sucesso")
+
+                return HttpResponseRedirect(reverse("ibroker:portfolio"))
+            except:
+                raise Http404("Erro ao executar ordem.")
+
+        return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
+
+
+
+
+
+
+
+
 
 
 

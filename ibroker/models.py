@@ -46,19 +46,14 @@ class Order(models.Model):
 
 
 class PorfolioItem():
-    def __init__(self,stock_code,amount,invested_value):
+    def __init__(self,stock_code,amount,invested_value,current_price):
         self.stock_code = stock_code
         self.amount = amount
         self.invested_value = invested_value
+        self.current_price = current_price
 
-    def current_price(self):
-        stock = object.get(stock_code=self.stock_code)
-        quote = Quote.objects.filter(stock=stock.id).order_by('-quote_datetime')[0]
+        self.current_value = current_price*amount
 
-        return quote.price
-
-    def current_value(self):
-        return self.current_price*self.amount
 
 
 
