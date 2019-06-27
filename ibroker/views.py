@@ -16,43 +16,45 @@ from django.utils.decorators import method_decorator
 import datetime
 import json
 # Create your views here.
+
+@method_decorator(login_required, name='dispatch')
 class HomePageView(TemplateView):
     template_name = 'ibroker/home.html'
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         user = self.request.user
-        ordersFromUser = Order.objects.filter(order_user = user)
-
-        stocksDic = {}
-
-        for order in ordersFromUser:
-            quote = order.order_stock_quote
-            stock = quote.stock
-
-            if not stock.id in stocksDic:
-                invested_value= order.order_amount*quote.price
-
-
-                current_price = Quote.objects.filter(stock=stock.id).order_by('-quote_datetime')[0].price
-
-                item = PorfolioItem(stock.stock_code,order.order_amount,invested_value,current_price)
-
-                stocksDic[stock.id] = item
-
-            else:
-                stocksDic.get(stock.id).amount += order.order_amount
-                stocksDic.get(stock.id).invested_value += order.order_amount * quote.price
-                stocksDic.get(stock.id).current_value = stocksDic.get(stock.id).amount * stocksDic.get(stock.id).current_price
-
-        total = 0
-        for stock in stocksDic:
-            total += stock.invested_value
+        # ordersFromUser = Order.objects.filter(order_user = user)
+        #
+        # stocksDic = {}
+        #
+        # for order in ordersFromUser:
+        #     quote = order.order_stock_quote
+        #     stock = quote.stock
+        #
+        #     if not stock.id in stocksDic:
+        #         invested_value= order.order_amount*quote.price
+        #
+        #
+        #         current_price = Quote.objects.filter(stock=stock.id).order_by('-quote_datetime')[0].price
+        #
+        #         item = PorfolioItem(stock.stock_code,order.order_amount,invested_value,current_price)
+        #
+        #         stocksDic[stock.id] = item
+        #
+        #     else:
+        #         stocksDic.get(stock.id).amount += order.order_amount
+        #         stocksDic.get(stock.id).invested_value += order.order_amount * quote.price
+        #         stocksDic.get(stock.id).current_value = stocksDic.get(stock.id).amount * stocksDic.get(stock.id).current_price
+        #
+        # total = 0
+        # for stock in stocksDic:
+        #     total += stock.invested_value
 
        # Add in the publisher
         context['user'] = self.request.user
         context['cash'] = UserHistory().get_amount_cash(user)
-        context['total'] = total
+        context['total'] = UserHistory().get_user_total_assets_value_date(user,datetime.datetime.now())
         return context
 
 #region Companhias
