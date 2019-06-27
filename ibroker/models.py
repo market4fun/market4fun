@@ -26,6 +26,11 @@ class Stock(models.Model):
     def __str__(self):
         return self.stock_code
 
+
+    def get_price_date(self,datetime):
+        price = Quote.objects.filter(stock=self).filter(quote_datetime__lte=datetime).order_by('-quote_datetime')[0].price
+        return price
+
 class Quote(models.Model):
     stock = models.ForeignKey(Stock,on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=TOTAL_DIGITS,decimal_places=2)

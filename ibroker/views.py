@@ -189,11 +189,24 @@ class SellView(View):
 def quotes(request):
     return HttpResponse("Página para visualizar cotações")
 
-
+@method_decorator(login_required,name='dispatch')
 class HistoryView(View):
 
 
     def get(self,request):
+        user = request.user
+
+
+
+
+        dates = Quote.objects.distinct('quote_datetime')
+
+
+
+
+
+
+
         return HttpResponse("Página para visualizar histórico de operações.")
 
 
