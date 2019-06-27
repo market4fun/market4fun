@@ -83,11 +83,11 @@ class SellForm(forms.Form):
         if quote:
             if not current_qtd:
                 raise forms.ValidationError(
-                        "You don't have {0} in your portfolio.".format(stock.stock_code)
+                        "Você não tem {0} no seu portfolio.".format(stock.stock_code)
                     )
             elif qtdSell>current_qtd:
                 raise forms.ValidationError(
-                        "You have only {0} stocks of {1} in your portfolio.".format(current_qtd,stock.stock_code)
+                        "Você tem apenas {0} ações de {1} no seu portfolio.".format(current_qtd,stock.stock_code)
                     )
 
         return cleaned_data

@@ -9,9 +9,16 @@
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li {% if message.tags %} class="mb-4"{% endif %} >{{ message }}</li>
+<div class="col-lg-6 mb-4">
+                  <div class="card bg-info text-white shadow">
+                    <div class="card-body">
+                        <p {% if message.tags %} class="mb-4"{% endif %} >{{ message }}</p>
+                    </div>
+                  </div>
+                </div>
     {% endfor %}
 </ul>
+
 {% endif %}
 
 

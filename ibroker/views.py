@@ -374,7 +374,7 @@ class SellView(View):
             except:
                 raise Http404("Erro ao executar ordem.")
 
-        return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
+        return render(request, 'ibroker/order/sell.html', {'form':form,'user':user})
 
 
 

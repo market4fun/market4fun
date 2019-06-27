@@ -1,23 +1,55 @@
+
+{% extends "ibroker/base.html" %}
+
+
 {% block content %}
-  <h2>Sell Form</h2>
+
+  <h1 class="h3 mb-2 text-gray-800">Venda de ativos</h1>
 
 {% if form.errors %}
     {% for field in form %}
         {% for error in field.errors %}
-            <p> {{ error }} </p>
-        {% endfor %}
+
+                <div class="col-lg-6 mb-4">
+                  <div class="card bg-warning text-white shadow">
+                    <li class="mb-4"> {{ error }} </li>
+
+                  </div>
+                </div>
+
+   {% endfor %}
     {% endfor %}
+
 {% endif %}
+
 
 
   <form method="post">
     {% csrf_token %}
-      <p>Current amount of stocks: Não Implementado ainda </p>
-      {{ form.as_p }}
+
+      {{ form.non_field_errors }}
+
+      <p><b>Quantidade de ações:</b> Não Implementado ainda </p>
+      <div class="fieldWrapper">
+        {{ form.stock.errors }}
+        <label for="{{ form.stock.id_for_label }}"><b>Ação: </b></label>
+        {{ form.stock }}
+        </div>
+
+        <div class="fieldWrapper">
+        {{ form.qtd.errors }}
+        <label for="{{ form.qtd.id_for_label }}"><b>Quantidade: </b></label>
+        {{ form.qtd }}
+        </div>
 
       <p><b>Current Price:</b> Não implementado ainda.</p>
       <p><b>Total:</b> Não implementado ainda.</p>
 
-    <button type="submit" onclick="return confirm('Are you sure?')">Executar</button>
+      <button  type="submit" onclick="return confirm('Você tem certeza?')" class="btn btn-light btn-icon-split">
+                    <span class="icon text-gray-600">
+                      <i class="fas fa-arrow-right"></i>
+                    </span>
+                    <span class="text">Vender</span>
+                  </button>
   </form>
 {% endblock %}
