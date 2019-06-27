@@ -75,7 +75,7 @@ class UserHistory():
     def get_user_total_assets_value_date(self,user,date):
         assetsValue =0
 
-        stockAmount = Order.objects.filter(order_user=user).filter(order_datetime__lte=date).values(stock=F('order_stock_quote__stock_id')).annotate(total_amount=Sum('order_stock_quote'))
+        stockAmount = Order.objects.filter(order_user=user).filter(order_datetime__lte=date).values(stock=F('order_stock_quote__stock_id')).annotate(total_amount=Sum('order_amount'))
 
         for pair in stockAmount:
             current_price = Quote.objects.filter(stock=pair['stock']).filter(quote_datetime__lte=date).order_by('-quote_datetime')[0].price
@@ -84,7 +84,7 @@ class UserHistory():
 
 
 
-        return assetsValue+self.get_amount_cash(user)
+        return  assetsValue+self.get_amount_cash(user)
 
 
 
