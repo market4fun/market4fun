@@ -29,7 +29,7 @@
 
       {{ form.non_field_errors }}
 
-      <p><b>Quantidade de ações:</b> Não Implementado ainda </p>
+      {% comment %}<p><b>Quantidade de ações:</b> Não Implementado ainda </p> {% endcomment %}
       <div class="fieldWrapper">
         {{ form.stock.errors }}
         <label for="{{ form.stock.id_for_label }}"><b>Ação: </b></label>
@@ -42,8 +42,8 @@
         {{ form.qtd }}
         </div>
 
-      <p><b>Current Price:</b> Não implementado ainda.</p>
-      <p><b>Total:</b> Não implementado ainda.</p>
+      {% comment %}<p><b>Current Price:</b> Não implementado ainda.</p> {% endcomment %}
+      {% comment %}<p><b>Total:</b> Não implementado ainda.</p> {% endcomment %}
 
       <button  type="submit" onclick="return confirm('Você tem certeza?')" class="btn btn-light btn-icon-split">
                     <span class="icon text-gray-600">
