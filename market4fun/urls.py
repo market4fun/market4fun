@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import TemplateView # new
+from market4fun.views import HomePageView
 
 urlpatterns = [
    path('users/',include('users.urls')),
@@ -23,5 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ibroker/', include('ibroker.urls'), name='ibroker'), #Homepage é a homepage do app ibroker
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', TemplateView.as_view(template_name='base/index.html'), name='home'),
+    path('', HomePageView.as_view(), name='home'),
 ]
