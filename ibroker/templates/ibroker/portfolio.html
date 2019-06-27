@@ -1,33 +1,73 @@
 
-<h1>Página de portfolio</h1>
+{% extends "ibroker/base.html" %}
+
+{% block content %}
+
+  <h1 class="h3 mb-2 text-gray-800">Portfolio</h1>
+  <p class="mb-4">Seus ativos atuais.</p>
 
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-    <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>
+    <li {% if message.tags %} class="mb-4"{% endif %} >{{ message }}</li>
     {% endfor %}
 </ul>
 {% endif %}
 
-{% if dic %}
-<table class="portfolio">
-    {% for key,item in dic.items %}
 
-    {% if item.amount > 0 %}
-        <tr>
-            <td>{{item.stock_code}}</td>
-            <td>{{item.amount}}</td>
-            <td>{{item.invested_value}}</td>
-            <td>{{item.current_price}}</td>
-            <td>{{item.current_value}}</td>
-            <td><a href="{% url 'ibroker:sell' %}"> Sell </a></td>
-        </tr>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Ativos</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>Ação</th>
+                      <th>Quantidade</th>
+                      <th>Valor Investido</th>
+                      <th>Preço Atual</th>
+                      <th>Valor Total Atual</th>
+                      <th>Vender</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>Ação</th>
+                      <th>Quantidade</th>
+                      <th>Valor Investido</th>
+                      <th>Preço Atual</th>
+                      <th>Valor Total Atual</th>
+                      <th>Vender</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+
+                {% if dic %}
+                    {% for key,item in dic.items %}
+
+                    {% if item.amount > 0 %}
+                    <tr>
+                        <td>{{item.stock_code}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.invested_value}}</td>
+                        <td>{{item.current_price}}</td>
+                        <td>{{item.current_value}}</td>
+                        <td><a href="{% url 'ibroker:sell' %}"> Vender </a></td>
+                    </tr>
 
     {% endif %}
 
     {% endfor %}
-</table>
 
 {% endif %}
 
-
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+{% endblock %}
