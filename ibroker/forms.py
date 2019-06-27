@@ -1,18 +1,13 @@
 from django import forms
-from ibroker.models import Stock,Quote,Order
+from ibroker.models import Stock,Quote,Order,UserHistory
 from django.db.models import Sum,Count,F
 
 
 
-class UploadQuotesFile(forms.Form):
-    title = forms.CharField(max_length=50)
+
+class UploadQuotesFileForm(forms.Form):
+    date= forms.DateTimeField()
     file = forms.FileField()
-
-
-
-
-
-
 
 #Todo melhorar e colocar um jeito de o usuário ver o custo total da operação
 #Acredito que deva ser feito no html, da pra fazer sem ajax se carregar todos os preços com uma lista ou algo assim
@@ -24,6 +19,11 @@ class OrderForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(OrderForm, self).__init__(*args, **kwargs)
+
+        stocks = Stock.objects.all()
+        choices = [(stock.id, stock.stock_code) for stock in stocks]
+
+        self.fields['stock'].choices = choices
 
 
 
@@ -41,7 +41,7 @@ class OrderForm(forms.Form):
             )
 
         if quote:
-            if quote.price*qtd>self.user.get_amount_cash():
+            if quote.price*qtd>UserHistory().get_amount_cash(self.user):
                 raise forms.ValidationError(
                         "You don't have enough money to buy {0} of {1}.".format(qtd,stock.stock_code)
                     )
@@ -56,6 +56,11 @@ class SellForm(forms.Form):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(SellForm, self).__init__(*args, **kwargs)
+
+        stocks = Stock.objects.all()
+        choices = [(stock.id, stock.stock_code) for stock in stocks]
+
+        self.fields['stock'].choices = choices
 
 
     def clean(self):
@@ -76,13 +81,16 @@ class SellForm(forms.Form):
             )
 
         if quote:
-            if qtdSell>current_qtd:
+            if not current_qtd:
                 raise forms.ValidationError(
-                        "You have only {0] stocks in your portfolio.".format(current_qtd)
+                        "You don't have {0} in your portfolio.".format(stock.stock_code)
+                    )
+            elif qtdSell>current_qtd:
+                raise forms.ValidationError(
+                        "You have only {0} stocks of {1} in your portfolio.".format(current_qtd,stock.stock_code)
                     )
 
         return cleaned_data
-
 
 
 

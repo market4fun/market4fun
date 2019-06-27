@@ -9,7 +9,7 @@ from django.views import generic
 from django.views.generic import TemplateView,ListView
 from ibroker.models import Company, Stock, UserHistory
 from ibroker.models import Quote,Order, PorfolioItem
-from .forms import UploadQuotesFile,OrderForm,SellForm
+from .forms import UploadQuotesFileForm,OrderForm,SellForm
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -35,15 +35,173 @@ class CompanyDetail(generic.DetailView):
 
 
 
+
+
+
+class UploadStockCompanyView(View):
+    def get(self, request):
+        user = request.user
+
+
+        if not user.is_staff:
+            return HttpResponse("Não pode")
+
+        context = {'title': 'Upload Stocks File'}
+        form = UploadQuotesFileForm()
+
+        context['form'] = form
+        return render(request, 'admin/admin.html', context)
+
+    def post(self,request):
+        context = {'title': 'Upload Stocks File'}
+
+        user = request.user
+        if not user.is_staff:
+            return HttpResponse("Denied")
+
+        form = UploadQuotesFileForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            # Do your magic with the completed form data.
+            date = form.cleaned_data['date']
+            l = self.handle_upload_file(date, request.FILES['file'])
+
+            # Let the user know that form was submitted.
+            messages.success(request, 'Congrats, form submitted!')
+
+            context['qtd'] = len(l)
+
+            return render(request, 'admin/success.html', context)
+        else:
+            messages.error(
+                request, 'Please correct the error below'
+            )
+
+        return render(request, 'admin/admin.html', context)
+
+
+
+    def handle_upload_file(self,date,file):
+        i=0
+        list = []
+        for line in file:
+            if i==0:
+                i+=1
+                continue
+            line = line.decode('utf-8', 'backslashreplace')
+            cols = line.split("\t")
+
+            stock_code = cols[0]
+            stock_description = cols[1]
+            name = cols[2]
+            description = cols[3]
+            img = cols[4]
+
+
+
+            comp = Company(company_name= name,company_description=description,company_img_url=img)
+
+            comp.save()
+
+            stock = Stock(stock_code=stock_code,stock_description=stock_description,company=comp)
+            stock.save()
+
+            list.append(stock)
+
+        return list
+
+
+
+
+class UploadQuoteView(View):
+    def get(self, request):
+        user = request.user
+
+
+        if not user.is_staff:
+            return HttpResponse("Não pode")
+
+        context = {'title': 'My Custom AdminForm'}
+        form = UploadQuotesFileForm()
+
+        context['form'] = form
+        return render(request, 'admin/admin.html', context)
+
+    def post(self,request):
+        context = {'title': 'My Custom AdminForm'}
+
+        user = request.user
+        if not user.is_staff:
+            return HttpResponse("Não pode")
+
+        form = UploadQuotesFileForm(request.POST, request.FILES)
+
+
+
+        if form.is_valid():
+            # Do your magic with the completed form data.
+            date = form.cleaned_data['date']
+            l = self.handle_upload_file(date, request.FILES['file'])
+
+            # Let the user know that form was submitted.
+            messages.success(request, 'Congrats, form submitted!')
+
+
+            context['qtd'] = len(l)
+
+            return render(request, 'admin/success.html', context)
+        else:
+            messages.error(
+                request, 'Please correct the error below'
+            )
+
+        return render(request, 'admin/admin.html', context)
+
+
+
+    def handle_upload_file(self,date,file):
+        stocks = Stock.objects
+        i=0
+        list = []
+        for line in file:
+            if i==0:
+                i+=1
+                continue
+            line = line.decode('utf-8', 'backslashreplace')
+            cols = line.split("\t")
+
+            stock_code = cols[0]
+            stock = stocks.get(stock_code=stock_code)
+            quote_datetime = date
+
+            try:
+                price = float(cols[2].replace(",","."))
+            except:
+                price=0
+
+
+
+
+            quote = Quote(stock=stock,price=price,quote_datetime=quote_datetime)
+            quote.save()
+
+        return list
+
+
+
+
+
+
+
 def upload_file(request):
     if request.method=="POST":
-        form = UploadQuotesFile(request.POST,request.FILES)
+        form = UploadQuotesFileForm(request.POST, request.FILES)
 
         if form.is_valid():
             #handle_upload_file(request.FILES['file'])
             return HttpResponse('Arquivo enviado com sucesso')
     else:
-        form = UploadQuotesFile()
+        form = UploadQuotesFileForm()
         return render(request,'upload.html',{'form':form})
 
 @method_decorator(login_required, name='dispatch')
@@ -53,12 +211,8 @@ class OrderView(View):
 
         form = OrderForm(user=user)
 
-        stocks = Stock.objects.all()
-        choices = [(stock.id, stock.stock_code) for stock in stocks]
-
-        form.fields['stock'].choices = choices
-
-        return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
+        cash = UserHistory().get_amount_cash(user)
+        return render(request, 'ibroker/order/order.html', {'form':form,'cash':cash})
 
     def post(self,request):
         user = request.user
@@ -90,7 +244,9 @@ class OrderView(View):
             except:
                 raise Http404("Erro ao executar ordem.")
 
-        return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
+            cash = UserHistory().get_amount_cash(user)
+
+        return render(request, 'ibroker/order/order.html', {'form':form,'cash':cash})
 
 
 
@@ -144,13 +300,6 @@ class SellView(View):
         user = request.user
 
         form = SellForm(user=user)
-
-
-        stocks = Stock.objects.all()
-        choices = [(stock.id, stock.stock_code) for stock in stocks]
-
-        form.fields['stock'].choices = choices
-
 
         return render(request, 'ibroker/order/sell.html', {'form':form,'user':user})
 

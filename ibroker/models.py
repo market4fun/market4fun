@@ -50,7 +50,6 @@ class Order(models.Model):
     def __str__(self):
         return "{0} - {1} - {2}".format(self.order_user.first_name,self.order_stock_quote.stock.stock_code,self.order_datetime)
 
-
 class PorfolioItem():
     def __init__(self,stock_code,amount,invested_value,current_price):
         self.stock_code = stock_code
@@ -70,7 +69,7 @@ class UserHistory():
         for order in orders:
             deltaCash+=order.order_stock_quote.price*order.order_amount
 
-        return CustomUser.INITIAL_CASH+deltaCash
+        return CustomUser.INITIAL_CASH-deltaCash
 
 
     def get_user_total_assets_value_date(self,user,date):

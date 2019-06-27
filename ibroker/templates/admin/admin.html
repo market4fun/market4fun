@@ -1,5 +1,5 @@
 {% block content %}
-  <h2>Order Form</h2>
+  <h2>Upload Form</h2>
 
 {% if form.errors %}
     {% for field in form %}
@@ -10,12 +10,9 @@
 {% endif %}
 
 
-  <form method="post">
+  <form enctype="multipart/form-data" method="post">
     {% csrf_token %}
-      <p>Cash available: {{cash}} </p>
       {{ form.as_p }}
-      <p><b>Total:</b> Não implementado ainda.</p>
-
-    <button type="submit" onclick="return confirm('Are you sure?')">Executar</button>
+    <button type="submit">Upload</button>
   </form>
 {% endblock %}

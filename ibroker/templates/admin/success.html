@@ -1,0 +1,19 @@
+
+<h1>Result</h1>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if context and context.qtd %}
+<p>{{qtd}} registros inseridos com sucesso!</p>
+{% endif %}
+
+
+
+
+
