@@ -12,14 +12,19 @@
 {% if dic %}
 <table class="portfolio">
     {% for key,item in dic.items %}
+
+    {% if item.amount > 0 %}
         <tr>
             <td>{{item.stock_code}}</td>
             <td>{{item.amount}}</td>
             <td>{{item.invested_value}}</td>
             <td>{{item.current_price}}</td>
             <td>{{item.current_value}}</td>
-            <td><a href="{% url 'ibroker:sell' key %}"> Sell </a></td>
+            <td><a href="{% url 'ibroker:sell' %}"> Sell </a></td>
         </tr>
+
+    {% endif %}
+
     {% endfor %}
 </table>
 

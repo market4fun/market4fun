@@ -1,0 +1,23 @@
+{% block content %}
+  <h2>Sell Form</h2>
+
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+
+
+  <form method="post">
+    {% csrf_token %}
+      <p>Current amount of stocks: Não Implementado ainda </p>
+      {{ form.as_p }}
+
+      <p><b>Current Price:</b> Não implementado ainda.</p>
+      <p><b>Total:</b> Não implementado ainda.</p>
+
+    <button type="submit" onclick="return confirm('Are you sure?')">Executar</button>
+  </form>
+{% endblock %}
