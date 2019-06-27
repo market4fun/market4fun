@@ -1,0 +1,43 @@
+
+{% extends "ibroker/history/base.html" %}
+
+{% block content %}
+<h1>History</h1>
+{% if ctx %}
+{{ctx}}
+    <ul>
+    {% for item in ctx %}
+        <li>{{item}}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No items are available.</p>
+{% endif %}
+
+<canvas id="productsChart" width="100" height="200"></canvas>
+{% endblock %}
+
+
+
+{% block scripts %}
+<script>
+
+var ctx = document.getElementById("productsChart");
+var dates = JSON.parse('{{ ctx.dates|safe }}');
+var perfs = JSON.parse('{{ ctx.perfs|safe }}');
+var productsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: dates,
+        datasets: [{
+            label: 'Perfomance',
+            data: perfs
+        }]
+    },
+
+    options:{maintainAspectRatio: false
+    }
+});
+</script>
+{% endblock %}
+

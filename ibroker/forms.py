@@ -17,15 +17,14 @@ class UploadQuotesFile(forms.Form):
 #Todo melhorar e colocar um jeito de o usuário ver o custo total da operação
 #Acredito que deva ser feito no html, da pra fazer sem ajax se carregar todos os preços com uma lista ou algo assim
 class OrderForm(forms.Form):
-    stocks = Stock.objects.all()
-    choices = [(stock.id,stock.stock_code) for stock in stocks]
-    stock = forms.ChoiceField(label='Stock: ',choices=choices)
+    stock = forms.ChoiceField(label='Stock: ')
     #price = forms.DecimalField(label='Price: ')
     qtd = forms.IntegerField(label='Quantidade',min_value=1)
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(OrderForm, self).__init__(*args, **kwargs)
+
 
 
     def clean(self):
@@ -50,9 +49,7 @@ class OrderForm(forms.Form):
         return cleaned_data
 
 class SellForm(forms.Form):
-    stocks = Stock.objects.all()
-    choices = [(stock.id,stock.stock_code) for stock in stocks]
-    stock = forms.ChoiceField(label='Stock: ',choices=choices)
+    stock = forms.ChoiceField(label='Stock: ')
     #price = forms.DecimalField(label='Price: ')
     qtd = forms.IntegerField(label='Quantidade: ',min_value=1)
 

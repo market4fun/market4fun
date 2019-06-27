@@ -1,7 +1,8 @@
 from django.db import models
-from users.models import CustomUser
 from django import forms
 from django.contrib import admin
+from users.models import CustomUser
+from django.db.models import Sum,F
 TOTAL_DIGITS = 15
 
 # Create your models here.
@@ -25,6 +26,11 @@ class Stock(models.Model):
 
     def __str__(self):
         return self.stock_code
+
+
+    def get_price_date(self,datetime):
+        price = Quote.objects.filter(stock=self).filter(quote_datetime__lte=datetime).order_by('-quote_datetime')[0].price
+        return price
 
 class Quote(models.Model):
     stock = models.ForeignKey(Stock,on_delete=models.CASCADE)
@@ -53,6 +59,33 @@ class PorfolioItem():
         self.current_price = current_price
 
         self.current_value = current_price*amount
+
+
+
+class UserHistory():
+
+    def get_amount_cash(self,user):
+        orders = Order.objects.filter(order_user=user)
+        deltaCash = 0
+        for order in orders:
+            deltaCash+=order.order_stock_quote.price*order.order_amount
+
+        return CustomUser.INITIAL_CASH+deltaCash
+
+
+    def get_user_total_assets_value_date(self,user,date):
+        assetsValue =0
+
+        stockAmount = Order.objects.filter(order_user=user).filter(order_datetime__lte=date).values(stock=F('order_stock_quote__stock_id')).annotate(total_amount=Sum('order_stock_quote'))
+
+        for pair in stockAmount:
+            current_price = Quote.objects.filter(stock=pair['stock']).filter(quote_datetime__lte=date).order_by('-quote_datetime')[0].price
+
+            assetsValue+=current_price*pair['total_amount']
+
+
+
+        return assetsValue+self.get_amount_cash(user)
 
 
 
