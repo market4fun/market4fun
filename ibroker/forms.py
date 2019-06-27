@@ -52,9 +52,11 @@ class OrderForm(forms.Form):
 
 class SellForm(forms.Form):
     stock = forms.ChoiceField(label='Stock: ')
+    stock.widget.attrs.update({'class': 'form-control'})
     #price = forms.DecimalField(label='Price: ')
     qtd = forms.IntegerField(label='Quantidade: ',min_value=1)
 
+    qtd.widget.attrs.update({'class': 'form-control'})
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(SellForm, self).__init__(*args, **kwargs)
