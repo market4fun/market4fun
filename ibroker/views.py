@@ -9,12 +9,11 @@ from django.views import generic
 from django.views.generic import TemplateView,ListView
 from ibroker.models import Company, Stock
 from ibroker.models import Quote,Order, PorfolioItem
-from .forms import UploadQuotesFile,OrderForm
+from .forms import UploadQuotesFile,OrderForm,SellForm
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import datetime
-from django.db.models import Sum,Count,F
 
 # Create your views here.
 class HomePageView(TemplateView):
@@ -116,6 +115,7 @@ def portfolio(request):
         if not stock.id in stocksDic:
             invested_value= order.order_amount*quote.price
 
+
             current_price = Quote.objects.filter(stock=stock.id).order_by('-quote_datetime')[0].price
 
             item = PorfolioItem(stock.stock_code,order.order_amount,invested_value,current_price)
@@ -138,15 +138,15 @@ class SellView(View):
     def get(self,request):
         user = request.user
 
-        form = OrderForm(user=user)
+        form = SellForm(user=user)
 
-        return render(request, 'ibroker/order/order.html', {'form':form,'user':user})
+        return render(request, 'ibroker/order/sell.html', {'form':form,'user':user})
 
     def post(self,request):
         user = request.user
 
-        #Aqui a mágica acontece
-        form = OrderForm(request.POST,user=user)
+        #Aqui a mágica acontece2
+        form = SellForm(request.POST,user=user)
 
         if(form.is_valid()):
             try:
@@ -158,11 +158,11 @@ class SellView(View):
 
                 now = datetime.datetime.now()
 
-                newOrder = Order(order_amount=qtd,order_stock_quote=quote,order_datetime=now,order_user=user)
+                newOrder = Order(order_amount=-qtd,order_stock_quote=quote,order_datetime=now,order_user=user)
                 newOrder.save()
 
                 total = quote.price*qtd
-                user.cash=user.cash-total
+                user.cash=user.cash+total
                 user.save()
 
 
