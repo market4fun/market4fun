@@ -9,7 +9,7 @@ class CustomUserManager(UserManager):
     pass
 
 class CustomUser(AbstractUser):
-    INITIAL_CASH = 100000.00
+    INITIAL_CASH = 100000
     cash = models.DecimalField(max_digits=15,decimal_places=2,default=100000)
     objects = CustomUserManager()
 

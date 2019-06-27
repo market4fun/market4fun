@@ -84,7 +84,7 @@ class UserHistory():
 
 
 
-        return assetsValue+self.get_amount_cash(user)
+        return  assetsValue+self.get_amount_cash(user)
 
 
 
