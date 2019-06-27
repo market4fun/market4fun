@@ -3,38 +3,42 @@
 {% block content %}
 
 {% if company_list %}
- <h1 class="h3 mb-2 text-gray-800">Empresas</h1>
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Empresas Bovespa</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
+<h1 class="h3 mb-2 text-gray-800">Empresas</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Empresas Bovespa</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
                     <tr>
-                      <th>Logo</th>
-                      <th>Nome</th>
+                        <th>Logo</th>
+                        <th>Nome</th>
                     </tr>
-                  </thead>
-                  <tfoot>
+                </thead>
+                <tfoot>
                     <tr>
-                      <th>Logo</th>
-                      <th>Nome</th>
+                        <th>Logo</th>
+                        <th>Nome</th>
                     </tr>
-                  </tfoot>
-                  <tbody>
-    {% for company in company_list %}
-    <tr>
-        <td> <img class="img-responsive img-responsive-2" src="{{company.company_img_url}}" alt="{{company.company_name}}" style="height:30px;"> </td>
-        <td><a href="{% url 'ibroker:company_detail' company.id %}">{{ company.company_name }}</a></td>
-    </tr>
-    {% endfor %}
-                  </tbody>
-                </table>
-{% else %}
-    <p>No companies are available.</p>
-{% endif %}
+                </tfoot>
+                <tbody>
+                    {% for company in company_list %}
+                    <tr>
+                        <td> <img class="img-responsive img-responsive-2" src="{{company.company_img_url}}" alt="{{company.company_name}}" style="height:30px;"> </td>
+                        <td><a href="{% url 'ibroker:company_detail' company.id %}">{{ company.company_name }}</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-{% endblock %}
+            {% else %}
+            <p>No companies are available.</p>
+            {% endif %}
+
+            {% endblock %}
